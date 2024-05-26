@@ -33,6 +33,19 @@ namespace ariel {
     int Graph::getEdges() const{
         return Graph::edges;
     }
+    int Graph::getOrderOfMagnitude() const{
+        return Graph::adjMatrix.size() * Graph::adjMatrix.size();
+    }
+
+    bool Graph::isSubGraph(const Graph& g) const{
+        if (this->getOrderOfMagnitude() < g.getOrderOfMagnitude()) return false;
+        for(size_t i = 0; i < g.adjMatrix.size();++i){
+            for(size_t j = 0; j < g.adjMatrix[0].size();++j){
+                if(this->adjMatrix[i][j] != g.adjMatrix[i][j]) return false;
+            }
+        }
+        return true;
+    }
     //Print Operator
     std::ostream& operator<<(std::ostream& os, const Graph& g) {
         const auto& matrix = g.adjMatrix;
@@ -139,5 +152,34 @@ namespace ariel {
         Graph g = Graph();
         g.loadGraph(result);
         return g;
+    }
+    //Comparison Operators
+    bool Graph::operator==(const Graph& g) const{
+        if(this->getOrderOfMagnitude() != g.getOrderOfMagnitude()){
+            return false; //If g1 is represented by 3x3 matrix and g2 is represented by a 4x4 matrix, they cannot be equal.
+        }
+        for(size_t i = 0; i < g.size(); ++i){
+            for(size_t j = 0; j < g.size();++j){
+                if(this->adjMatrix[i][j] != g.adjMatrix[i][j]) return false;
+            }
+        }
+        return true;
+    }
+    bool Graph::operator>=(const Graph& g) const{
+        if(*this == g) return true; 
+        return false;
+    }
+    bool Graph::operator<=(const Graph& g) const{
+        if(*this == g) return true;
+        return false;
+    }
+    bool Graph::operator>(const Graph& g) const{
+        if(this->isSubGraph(g)) return true; 
+        if(this->getEdges() > g.getEdges()) return true;
+        if(this->getOrderOfMagnitude() > g.getOrderOfMagnitude()) return true;
+        return false;
+    }
+    bool Graph::operator<(const Graph& g) const{
+        return g > *this;
     }
 }

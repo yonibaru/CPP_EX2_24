@@ -16,6 +16,8 @@ namespace ariel{
         int size() const;
         std::vector<std::vector<int>> getMatrix() const;
         int getEdges() const;
+        int getOrderOfMagnitude() const;
+        bool isSubGraph(const Graph& g) const;
         //Print operator
         friend std::ostream& operator<<(std::ostream& os, const Graph& g);
         //Addition Operators
@@ -26,6 +28,12 @@ namespace ariel{
         friend Graph operator-(const Graph& g1, const Graph& g2);
         Graph& operator-=(const Graph& other);
         Graph operator-() const;
+        //Comparison Operators
+        bool operator==(const Graph& g) const;
+        bool operator>=(const Graph& g) const;
+        bool operator<=(const Graph& g) const;
+        bool operator>(const Graph& g) const;
+        bool operator<(const Graph& g) const;
     };
 }
 #endif 

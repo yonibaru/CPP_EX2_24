@@ -37,7 +37,6 @@ int main()
     cout<<g3;           // Should print the matrix of the graph: [0, 2, 1], [2, 0, 3], [1, 3, 0]
     g3 += g1;
     cout<<g3;           // Should print the matrix of the graph: [0, 2, 1], [2, 0, 3], [1, 3, 0]
-
     // g1 *= -2;        // Multiply the graph by -2.
     // cout<<g1; // Should print the matrix of the graph: [0, -2, 0], [-2, 0, -2], [0, -2, 0]
 
@@ -62,4 +61,12 @@ int main()
     // {
     //     cout << e.what() << endl; // Should print "The number of columns in the first matrix must be equal to the number of rows in the second matrix."
     // }
+    vector<vector<int>> graph3 = {
+        {0, 1},
+        {1, 0}
+    };
+    ariel::Graph g7;
+    g7.loadGraph(graph3); // Load the graph to the object.
+    bool x = g2<g7;
+    cout << x << "\n";
 }
