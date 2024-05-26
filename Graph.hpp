@@ -7,12 +7,14 @@ namespace ariel{
     class Graph {
     private:
         std::vector<std::vector<int>> adjMatrix;
+        std::vector<std::vector<int>> prevMatrix;
+        std::vector<std::vector<int>> distMatrix;
         int vxs;
         int edges;
     public:
         Graph(); 
         void loadGraph(const std::vector<std::vector<int>>& matrix);
-        void printGraph() const;
+        std::string printGraph() const;
         int size() const;
         std::vector<std::vector<int>> getMatrix() const;
         int getEdges() const;
@@ -34,6 +36,21 @@ namespace ariel{
         bool operator<=(const Graph& g) const;
         bool operator>(const Graph& g) const;
         bool operator<(const Graph& g) const;
+        //Inc./Dec. Operators
+        Graph operator++();
+        Graph operator--();
+        //Multiplication Operators
+        friend Graph operator*(const Graph& g1,const Graph& g2);
+        Graph operator*(int scalar);
+
+        //Old functions from Ex1
+        std::vector<std::vector<int>> getGraph() const;
+        std::vector<std::vector<int>> getPrevMatrix() const;
+        std::vector<std::vector<int>> getDistMatrix() const;
+        void floydWarshall();
+        void floydWarshallNegCycle();
+        void dfs(int v,std::vector<bool>& visited) const;
+
     };
 }
 #endif 

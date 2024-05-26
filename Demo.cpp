@@ -67,6 +67,6 @@ int main()
     };
     ariel::Graph g7;
     g7.loadGraph(graph3); // Load the graph to the object.
-    bool x = g2<g7;
+    bool x = g2>g7;
     cout << x << "\n";
 }

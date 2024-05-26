@@ -1,23 +1,47 @@
-# מטלה 2 - גרפים והעמסת אופרטורים
+        
+The following is a documentation for EX2 of SE2.
+AUTHOR: Yoni Baruch | 211465786 | theyonib@gmail.com
+Various helpful sources I have used includes: ChatGPT, Wikipedia, GeekForGeeks, StackOverflow.
+# Disclaimer
+I couldn't get the given makefile to work with my code, therefore I had to create my own. You should be able to run ./test normally.
+Regarding tests, I added 15 tests to the given tests.
 
-במטלה הקודמת מימשתם את המחלקה `Graph.cpp` המאפשרת ייצוג של גרפים בעזרת מטריצת שכנויות. במטלה הזאת, אתם תרחיבו את המחלקה ותוסיפו תמיכה באופרטורים חשבוניים על גרפים.
-כאמור, הגרפים מיוצגים בעזרת מטריצת שכנויות, לכן כל האופרטורים צריכים להיות חוקיים עבור מטריצות (כמו שלמדתם בקורס אלגברה לינארית).
+I've taken the liberty to remove all irrelevant functions from the last exercise.
+# Graph:
+Represented by a class.
+## Fields
+* adjMatrix: The adjacency matrix inserted by calling loadGraph().
+* vxs: # of vertices in the given graph.
+* edges: # of edges in the given graph.
+## Methods:
+* Graph(): default constructor.
+* loadGraph(): Loads the graph from a given adjacency matrix.
+* printGraph(): Prints the edges and vxs in a graph in the correct format.
+* size(): Returns # of vxs in the given graph.
+* getEdges(): Returns the # of edges in the given graph.
+* getOrderOfMagnitude(): Returns the order of magntitude of the Matrix.
+* isSubGraph(graph): Given a graph, this function returns true if it is a subgraph of the current graph.
+## Operators
+* operator<<(): Overloads the default << operator to print out a graph correctly. It's unused in the tests.
+* operator+(): Overloads the default + operator to allow addition of 2 graphs by recursively additioning their adj. matrices.
+* operator-(): Overloads the default - operator to allow addition of 2 graphs by recursively subtracting their adj. matrices.
+* operator+=(): Same as operator+() but does the calculation in place.
+* operator-=(): Same as operator-() but does the calculations in place.
+* operator-() (unary): In-place, causes all edge weights to be multiplied by -1.
+* operator+() (unary): Returns the same graph.
+* operator*(): Overloads the default * operator to allow addition of 2 graphs by recursively multiplying their adj. matrices.
+* operator*(int scalar): Multiplies all edges of the graph by some scalar.
+# Comparison Operators
+* operator==(): Returns true if the two graph's adj. matrices are of the same order of magnitude and have matching weight edges.
+* operator>(): Returns true if: right graph is a subgraph of the left graph, or have the same weight edges, or are of the same order of magnitude.
+* operator<(): Exactly as the > operator but in reverse order for simplicity.
+* operator>=(): Combination of the < operator and the == operator.
+* operator<=(): Combination of the > operator and the == operator.
+# Inc./Dec. Operators
+* operator++(): Increments all edges of the adj. matrix by 1.
+* operator--(): Decrements all edges of the adj. matrix by 1.
 
-אתם תצטרכו להוסיף את האופרטורים הבאים:
 
-- שישה אופרטורים חשבוניים: חיבור (+) הוספה (+=) פלוס אונרי (+), ושלושת האופרטורים המקבילים לחיסור (-). כאמור, חיבור/חיסור של שתי מטריצות מוגדר רק על מטריצות מאותו סדר גודל nXn. ניסיון לחבר/לחסר שתי מטריצות שלא מקיימות תנאי זה יגרום לזריקת שגיאה.
-- שישה אופרטורי השוואה: גדול, גדול-או-שווה, קטן, קטן-או-שווה, שווה, לא-שווה. לשם מטלה זו כללי השוואת גרפים הם כדלקמן:
-
-  1. גרפים G1 ו-G2 ייקראו שווים אם הם מאותו סדר גודל ומכילים את אותן הצלעות (והמשקלים של הצלעות זהים) או אם G1 לא גדול מ-G2 וגם G2 לא גדול מ-G1.
-  2. גרף G2 גדול מגרף G1 אם הגרף G1 מוכל ממש בגרף G2. אם אף גרף לא מוכל ממש בשני והגרפים לא שווים, אז גרף G2 גדול מגרף G1 אם מספר הצלעות ב-G2 גדול ממספר הצלעות ב-G1. אם בכל זאת מספר הצלעות זהה, אז הגרף G2 גדול מהגרף G1 אם המטריצה המייצגת של G2 בעלת סדר גודל גבוה יותר משל G1.
-
-- הגדלה ב-1 (++) והקטנה ב-1 (--) לפני ואחרי המספר. פעולה זו תגדיל או תקטין ב-1 את כל המשקלים של הצלעות בגרף.
-- הכפלה בסקלר שלם (`int`) - מכפיל את המשקל של כל הצלעות.
-- הכפלת גרפים - אנחנו מגדירים את פעולת הכפל בין גרף G1 לגרף G2 על ידי מכפלה של המטריצות המייצגות של שני הגרפים. התוצאה צריכה להיות מטריצה המייצגת גרף. ניסיון לבצע כפל בין גרפים בגדלים שונים צריך לזרוק שגיאה.
-- אופרטור פלט - הדפסה הגיונית של הגרף (צורת ההפדסה היא לשיקולכם).
-
-
-כמו כן, עליכם לכלול גם את הקובץ `Algorithms.cpp` מהמטלה הקודמת ולראות כיצד הפונקציות שהגדרתם בפעם הקודמת משתנות עכשיו. בנוסף לקבצים של המטלה אתם נדרשים להגיש גם קובץ README המתאר את אופן המימוש ואת החלוקה שביצעתם בקוד (סוג של מדריך משתמש).
-עליכם לכתוב בתחילת כל קובץ את מספר תעודת הזהות שלכם ואת המייל. אי עמידה בהנחיות תגרור הפחתה בציון.
-בהצלחה!
+## How does Algorithms.cpp changes now that we've added operators?
+It makes tidious calculations commonly seen in algorithms such as Floyd-Warshall algorithm much easier in code by simply allowing us to multiply 2 matrices.
 
